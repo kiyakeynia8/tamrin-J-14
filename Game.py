@@ -7,7 +7,7 @@ from jon import Jon
 from bullet import Bullet
 
 DEFAULT_FONT_SIZE = 45
-
+    
 class Game(arcade.Window):
     def __init__(self):
         self.w = 500
@@ -28,6 +28,9 @@ class Game(arcade.Window):
         arcade.start_render()
         arcade.draw_lrwh_rectangle_textured(0,0,self.width,self.height,self.background)
         self.my_jet.draw()
+
+        arcade.draw_text("Score:",350,20, font_size=20)
+        arcade.draw_text(self.my_jet.Score,430,20, font_size=20)
 
         for doshman in self.doshmans:
             doshman.draw()
@@ -84,20 +87,23 @@ class Game(arcade.Window):
                 self.doshmans.remove(doshman)
                 self.my_jet.jons.remove(self.my_jet.jons[0])
                 if len(self.my_jet.jons) == 0:
-                    self.my_jet.sound()
-                    arcade.draw_text('GAME OVER', self.w//2-200, self.h//2, arcade.color.ORANGE, DEFAULT_FONT_SIZE //2, width=400, align='center')
+                    Spaceship.sound()
+                    arcade.draw_rectangle_filled(250, 250, 500, 700, arcade.color.BLACK)
+                    arcade.draw_text("GAME OVER", 250, 350, font_size=40)
                     print("game over")
+                    time.sleep(3)
                     exit(0)
 
         for doshman in self.doshmans:
             if arcade.check_for_collision(doshman, self.my_jet):
-                self.my_jet.sound()
-                arcade.draw_text('GAME OVER', self.w//2-200, self.h//2, arcade.color.ORANGE, DEFAULT_FONT_SIZE //2, width=400, align='center')
-                print("Game Over")
+                Spaceship.sound()
+                arcade.draw_rectangle_filled(250, 250, 500, 700, arcade.color.BLACK)
+                arcade.draw_text("GAME OVER", 250, 350, font_size=40)
+                print("game over")
+                time.sleep(3)
                 exit(0)
 
         self.my_jet.move()
-        arcade.draw_text('Score: %i'%self.my_jet.Score, self.w-130, 10, arcade.color.RED, DEFAULT_FONT_SIZE //2, width=200, align='left')
 
     
         for doshman in self.doshmans:  
